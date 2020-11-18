@@ -92,3 +92,117 @@ AbstractQueueSynchronizer：抽象队列式的同步器。
 
 不可重复利用 | 可重复利用
 
+###java集合
+线性集合
+
+List ArrayList,LinkedList,Stack 
+ 
+Set HashSet,TreeSet
+
+Queue Dueue 
+
+
+Map HashMap,TreeHashMap,LinkedHashMap
+Dictionary Properties
+
+####CopyOnWriteArrayList
+核心改进原则：
+
+1、写加锁，保证不会写混乱。
+
+2、写在一个Copy副本上，而不是原始数据上。
+
+读的是当前的数据，后面的写操作是在其副本上操作对其没有读影响。读的时候写入了数据阶段，会有读数据不一致的情况发生。保证了最终一致。
+
+Object[] newElements = Arrays.copyOf(elements, len + 1);
+
+System.arraycopy(elements, 0, newElements, 0, index);
+
+System.arraycopy(elements, index + 1, newElements, index, numMoved);
+
+使用迭代器的时候，直接拿当前的数组对象做为快照，此后的List元素变动，就跟这次迭代没关系了。
+
+####HashMap
+
+基本特点：空间换时间，哈希冲突不大的情况下查找数据性能很高
+
+用途：存放指定key的对象，缓存对象
+
+原理：使用hash原理，存k-v数据，初始容量16，扩容x2，负载因子0.75
+
+JDK8以后，在链表长度到8 & 数组长度到64时，使用红黑树。
+
+安全问题：
+
+1、写冲突
+
+2、读写问题，可能会死循环
+
+3、keys()无序问题
+
+####LinkedHashMap
+基本特点：继承自HashMap,对Entry集合添加了一个双向链表
+
+用途：保证有序，特别是Java8 stream操作的toMap时使用
+
+原理：同LinkedList，包括插入顺序和访问顺序(将访问的节点挪到链表尾部)
+
+安全问题：同HashMap
+
+####ConcurrentHashMap
+
+Java7 使用分段锁 多个Segment -> 一个Segment -> 对应HashMap的桶
+
+分段锁 默认16个Segment，降低锁粒度。concurrentLevel = 16
+
+Segment[] -> 分库
+
+HashEntry[] -> 分表
+
+Java8 取消分段锁 链表加入红黑树操作
+
+Java7为实现并行访问，引入了Segment这一结构，实现了分段锁，理论上最大并发度与Segment个数相等。
+
+Java8为进一步提高并发性，摒弃了分段锁的方案，而是直接使用一个大的数组。
+
+####线程安全操作利器 - ThreadLocal
+public ThreadLocal()  构造方法
+
+protected T initialValue()  复写-设置初始默认值
+
+void set(T value)  设置本线程对应的值
+
+void remove()  清理本线程对应的值
+
+T get()  获取本线程对应的值
+
+线程本地变量
+
+场景：每个线程一个副本
+
+不改方法签名静默传参
+
+及时进行清理
+
+并行Stream
+
+####线程间协作与通信
+1.线程间共享：
+
+static/实例变量(堆内存)
+
+Lock
+
+synchronized
+
+2.线程间协作：
+
+Thread#join()
+
+Object#wait/notify/notifyAll
+
+Future/Callable
+
+CountdownLatch
+
+CyclicBarrier

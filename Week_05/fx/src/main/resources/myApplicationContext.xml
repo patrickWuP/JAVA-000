@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="naonao" class="com.wp.beanassemble.Cat">
+        <property name="id" value="1"/>
+        <property name="name" value="闹闹"/>
+    </bean>
+    
+    <bean id="family" class="com.wp.beanassemble.Family">
+        <property name="cat" ref="naonao"/>
+    </bean>
+</beans>
