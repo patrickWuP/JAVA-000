@@ -75,5 +75,18 @@ Bean的加载过程
 1、根据Bean的字段结构，自动生成XSD
 2、根据Bean的字段结构，配置XML文件
 
+XML/@AutoWire 1.0/2.0 XML配置/注解注入
+
+@Service 2.5 半自动注解配置
+
+@Bean/@Configuration 3.0 Java Congfig 配置
+
+@Condition/@AutoConfigureX  4.0/SpringBoot 全自动注解配置
 
 ###Spring Messaging等技术
+
+同步转异步
+
+点对点的模式 一个消息 一次消费
+
+发布订阅模式 一个消息 多人订阅

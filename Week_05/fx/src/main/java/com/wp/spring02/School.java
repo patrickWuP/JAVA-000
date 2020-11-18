@@ -3,12 +3,13 @@ package com.wp.spring02;
 import com.wp.aop.ISchool;
 import com.wp.spring01.Student;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
 
 @Data
 public class School implements ISchool {
 
-    @Autowired
+    @Resource(name = "student222")
     Student wp;
     
     @Override
