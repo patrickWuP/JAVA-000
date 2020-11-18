@@ -67,5 +67,13 @@ Bean的加载过程
 
 ###Spring XML 配置原理
 
+自定义标签 schema Location  [spring.handler,spring.schemas] [检查XML配置是否正确,从DOM节点parse对象]  Bean
+
+自动化XML配置工具： XmlBeans -> Spring-xbean （支持Xml文件和POJO对象相互之间的转换）
+
+2个原理：
+1、根据Bean的字段结构，自动生成XSD
+2、根据Bean的字段结构，配置XML文件
+
 
 ###Spring Messaging等技术

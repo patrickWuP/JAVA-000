@@ -1,4 +1,4 @@
 #common
-
+target/
 #java class
 *.class
