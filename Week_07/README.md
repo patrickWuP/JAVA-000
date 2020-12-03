@@ -28,6 +28,12 @@ jdbc 100w 一次性插入效率太低下。
 | 插入方式  | 数据量 | 耗时(s) |
 | --------- | ------ | ------- |
 | 存储过程  | 100W   | 33.13    |
-| Java JDBC | 100W   |         |
+| Java JDBC | 100W   | 4737.304  16.312(加了rewriteBatchedStatements=true参数后的表现)         |
 | 存储过程  | 1000W  | 315.85   |
-| Java JDBC | 1000W  |         |
+| Java JDBC | 1000W  |      187.460(加了rewriteBatchedStatements=true参数后的表现)   |
+
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/shop?characterEncoding=utf8&rewriteBatchedStatements=true&useSSL=false&serverTimezone=Asia/Shanghai
+
+很好奇 rewriteBatchedStatements=true 做了什么黑魔法？
+
+https://blog.csdn.net/qq271859852/article/details/79562262

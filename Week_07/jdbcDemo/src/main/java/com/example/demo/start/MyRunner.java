@@ -11,12 +11,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
-@Component
+//@Component
 public class MyRunner implements CommandLineRunner {
     
     @Autowired
@@ -27,28 +25,9 @@ public class MyRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         long start = System.currentTimeMillis();
-        List<Future> list = new ArrayList<>();
-        int sum = 100;
-        //创建有十个线程的线程池，一个线程处理10000条记录
-        for (int i = 0; i < 100; i++) {
-            final int begin = (i * 10000) + 1;
-            final int end = (i + 1) * 10000;
-            Runnable runnable = () -> {
-//                System.out.println("begin:" + begin + "end:" + end);
-                List<Order> orders = createOrders(begin, end);
-                orderDao.batchSave(orders);
-            };
-            Future<?> submit = executorService.submit(runnable);
-            list.add(submit);
-        }
-        for (Future task : list) {
-            try {
-                task.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+        for(int i = 0; i < 10; i++){
+            List<Order> orders = createOrders(i * 1000000 + 1,100000);
+            orderDao.batchSave(orders);
         }
         System.out.println("耗时：" + (System.currentTimeMillis() - start));
     }
@@ -56,7 +35,7 @@ public class MyRunner implements CommandLineRunner {
     private List<Order> createOrders(int start, int end) {
         List<Order> list = new ArrayList<>();
 
-        for (int i = start; i < end; i++) {
+        for (int i = start; i < start + end; i++) {
             Order order = new Order();
             order.setId(i);
             order.setUserId(1 + (int) (Math.random()*10000));

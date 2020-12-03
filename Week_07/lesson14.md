@@ -248,3 +248,8 @@ MySQL复制的拓补关系及状态，通过web可更改MySQL示例的复制关�
 
 能直接在UI界面拖拽改变主从关系
 
+秦金卫(kimmking):
+mysqldump原理，
+lock tables all，所有表锁住，
+select 。。。。
+unlock tbales

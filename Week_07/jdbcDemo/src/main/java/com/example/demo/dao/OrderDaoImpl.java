@@ -21,7 +21,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void batchSave(List<Order> list) {
-        String sql = "insert into `order` values (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into `order` (id,user_id,commodity_id,commodity_price,state,create_time,modify_time) values (?, ?, ?, ?, ?, ?, ?)";
         
         jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
             @Override
