@@ -32,7 +32,7 @@ public class HikariSaveRunner implements CommandLineRunner {
         long l = System.currentTimeMillis();
 //        showConnection();
         ExecutorService executorService = Executors.newFixedThreadPool(16);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 100; i++) {
             executorService.submit(() -> {
                 saveData();
             });
@@ -52,7 +52,22 @@ public class HikariSaveRunner implements CommandLineRunner {
         PreparedStatement preparedStatement = null;
         try {
             connection = dataSource.getConnection();
-            String insertSQL = "insert into `order` (user_id,commodity_id,commodity_price,state,create_time,modify_time) values (?, ?, ?, ?, ?, ?)";
+            StringBuilder sql = new StringBuilder("insert into `order` (user_id,commodity_id,commodity_price,state,create_time,modify_time) values ");
+            for (int i = 0; i < 10000; i++) {
+                if (i != 0) {
+                    sql.append(",");
+                }
+                sql.append("(")
+                        .append(i + 1)
+                        .append(",").append(i + 1)
+                        .append(",").append(BigDecimal.TEN)
+                        .append("," + 0)
+                        .append(",'2020-01-01 22:00:00'")
+                        .append(",'2020-01-01 22:00:00'")
+                        .append(")");
+            }
+            PreparedStatement preparedStatement1 = connection.prepareStatement(sql.toString());
+            /*String insertSQL = "insert into `order` (user_id,commodity_id,commodity_price,state,create_time,modify_time) values (?, ?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(insertSQL);
             for (int i = 0; i < 10000; i++) {
                 preparedStatement.setInt(1, (i + 1));
@@ -63,7 +78,8 @@ public class HikariSaveRunner implements CommandLineRunner {
                 preparedStatement.setDate(6, new Date(System.currentTimeMillis()));
                 preparedStatement.addBatch();
             }
-            preparedStatement.executeBatch();
+            preparedStatement.executeBatch();*/
+            preparedStatement1.execute();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
