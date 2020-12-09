@@ -100,18 +100,69 @@
     f.用程序连接启动的sharding-proxy对proxy上的库test_shop中的表t_order进行操作，proxy会将真实的操作执行到具体的2个库（shop_0,shop_1）32张表上。
     
 3.（选做）模拟 1000 万的订单单表数据，迁移到上面作业 2 的分库分表中。
+   
+   a.使用了雪花算法生成的id进行导入，使用以上的分库分表规则，发现两个库分配的数据相差无几，每个库中表中的数据，却十分的不均匀。
+   shop_0库使用sql统计如下：
+   ````
+   SELECT count(*) FROM t_order_0;#174591
+   SELECT count(*) FROM t_order_1;#0
+   SELECT count(*) FROM t_order_2;#217624
+   SELECT count(*) FROM t_order_3;#0
+   SELECT count(*) FROM t_order_4;#83477
+   SELECT count(*) FROM t_order_5;#0
+   SELECT count(*) FROM t_order_6;#21380
+   SELECT count(*) FROM t_order_7;#0
+   SELECT count(*) FROM t_order_8;#2753
+   SELECT count(*) FROM t_order_9;#0
+   SELECT count(*) FROM t_order_10;#106
+   SELECT count(*) FROM t_order_11;#0
+   SELECT count(*) FROM t_order_12;#0
+   SELECT count(*) FROM t_order_13;#0
+   SELECT count(*) FROM t_order_14;#0
+   SELECT count(*) FROM t_order_15;#0
+   ````
+   shop_1库使用sql统计如下：
+   ```
+   SELECT count(*) FROM t_order_0;#0
+   SELECT count(*) FROM t_order_1;#302143
+   SELECT count(*) FROM t_order_2;#0
+   SELECT count(*) FROM t_order_3;#144557
+   SELECT count(*) FROM t_order_4;#0
+   SELECT count(*) FROM t_order_5;#44226
+   SELECT count(*) FROM t_order_6;#0
+   SELECT count(*) FROM t_order_7;#8487
+   SELECT count(*) FROM t_order_8;#0
+   SELECT count(*) FROM t_order_9;#642
+   SELECT count(*) FROM t_order_10;#0
+   SELECT count(*) FROM t_order_11;#14
+   SELECT count(*) FROM t_order_12;#0
+   SELECT count(*) FROM t_order_13;#0
+   SELECT count(*) FROM t_order_14;#0
+   SELECT count(*) FROM t_order_15;#0
+   ```
     
-    
+   TODO 待分析
 
 4.（选做）重新搭建一套 4 个库各 64 个表的分库分表，将作业 2 中的数据迁移到新分库。
     
   按照课程内容，一共有全量；全量+增量；全量+增量+binlog方式。
   
   但由于是库表的分片方式发生了改变，不管哪种方式都需要通过代码或者脚本重新计算该数据分配的库，及该库对应的表中。
+  
+  可以使用迁移工具ShardingSphere-scaling进行数据迁移。
 
 Week08 作业题目（周六）：
 1.（选做）列举常见的分布式事务，简单分析其使用场景和优缺点。
+常见的事务模型：
+
+XA：强一致，对业务效率影响较大，串行执行子事务。对业务入侵小。
+
+AT：两阶段提交，自动解析出逆操作需要的sql，对业务效率影响较小。
+
+TCC：最终一致，对业务效率很小。对业务侵入较大，需要注意方法的幂等性，防悬挂。
+
 2.（必做）基于 hmily TCC 或 ShardingSphere 的 Atomikos XA 实现一个简单的分布式事务应用 demo（二选一），提交到 Github。
+由于猫大人讲了hmily，就实现hmily TCC的例子。
 3.（选做）基于 ShardingSphere narayana XA 实现一个简单的分布式事务 demo。
 4.（选做）基于 seata 框架实现 TCC 或 AT 模式的分布式事务 demo。
 5.（选做☆）设计实现一个简单的 XA 分布式事务框架 demo，只需要能管理和调用 2 个 MySQL 的本地事务即可，不需要考虑全局事务的持久化和恢复、高可用等。
