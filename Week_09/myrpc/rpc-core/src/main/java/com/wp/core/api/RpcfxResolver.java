@@ -1,6 +1,6 @@
 package com.wp.core.api;
 
-public interface RpcfxResolver {
+public interface RpcfxResolver <T> {
     
-    Object resolve(String serviceClass);
+    T resolve(String serviceClass);
 }

@@ -35,7 +35,6 @@ public class RpcfxInvoker {
                 }
             }
             Object invoke = method.invoke(resolve, request.getParams());
-            // 作业1：改成泛型和反射
             response.setResult(JSON.toJSONString(invoke, SerializerFeature.WriteClassName));
             response.setStatus(100);
             return response;

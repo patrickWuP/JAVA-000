@@ -10,7 +10,11 @@
 
 2）尝试将客户端动态代理改成AOP，添加异常处理
 
+切client端的接口方法，执行方法时用aop的around替换为rpc调用。
+
 3）尝试使用Netty+HTTP作为client端传输方式
+
+
 
 问题1：client传递的id为Long型，到server端后就变成了Integer型，导致想用参数类型获取方法无法正确获取。
 
