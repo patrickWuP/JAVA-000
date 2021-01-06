@@ -44,7 +44,7 @@ public class RpcfxInvoker {
             // 2.封装一个统一的RpcfxException
             // 客户端也需要判断异常
             e.printStackTrace();
-            response.setE(new MyRpcException("server invoke failed", e));
+            response.setE(new MyRpcException("order invoke failed", e));
             response.setStatus(999);
             return response;
         }

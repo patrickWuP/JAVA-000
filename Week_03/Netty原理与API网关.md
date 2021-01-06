@@ -4,6 +4,25 @@ Boss Group：
 
 Worker Group：
 
+EventLoop
+
+Executor Group
+
+关键对象
+
+Bootstrap：启动线程，开启socket
+
+EventLoopGroup
+
+EventLoop
+
+SocketChannel：连接
+
+ChannelInitializer：初始化
+
+ChannelPipeline：处理器链
+
+ChannelHandler：处理器
 
 
 单线程高效的秘诀是不能被卡住。
