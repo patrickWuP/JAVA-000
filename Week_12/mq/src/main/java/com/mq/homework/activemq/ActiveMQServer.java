@@ -9,7 +9,8 @@ public class ActiveMQServer {
         // 然后用前面的测试demo代码，连接这个嵌入式的server
         BrokerService brokerService = new BrokerService();
         brokerService.setUseJmx(true);
-        brokerService.addConnector("tcp://127.0.0.1:61616");
+//        brokerService.addConnector("tcp://127.0.0.1:61616");
+        brokerService.addConnector("mqtt://0.0.0.0:1883");
         brokerService.start();
     }
 }
