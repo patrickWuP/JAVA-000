@@ -54,6 +54,7 @@ CREATE TABLE `mq_order` (
 
 5、（挑战☆☆☆）基于ActiveMQ的MQTT实现简单的聊天功能或者Android消息推送。
 
+https://github.com/patrickWuP/JAVA-000/tree/main/Week_12/mq/src/main/java/com/mq/homework/activemq/mqtt
 
 6、（挑战☆）创建一个RabbitMQ，用Java代码实现简单的AMQP协议操作。
 
