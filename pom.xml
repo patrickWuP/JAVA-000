@@ -6,7 +6,10 @@
     <groupId>io.github.wupeng</groupId>
     <artifactId>JAVA-000</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>summary</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <name>JAVA-000</name>
     
